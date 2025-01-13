@@ -1,42 +1,42 @@
 {
 	"name": "@extws/client",
-	"version": "0.1.0-beta.5",
+	"version": "0.2.0-beta.1",
 	"description": "Client for ExtWS",
 	"publishConfig": {
-		"access": "public",
-		"tag": "beta"
+		"access": "public"
 	},
 	"type": "module",
-	"main": "src/main.js",
+	"main": "dist/esm/main.js",
+	"types": "dist/esm/main.d.ts",
 	"exports": {
 		".": {
-			"import": {
-				"browser": "./dist/extws-client.js",
-				"default": "./src/main.js"
-			}
-		},
-		"./browser": "./dist/extws-client.js"
+			"import": "./dist/esm/main.js",
+			"require": "./dist/main.cjs"
+		}
 	},
 	"dependencies": {
-		"@extws/server": "0.1.0-beta.8",
-		"@kirick/event-emitter": "3.0.0",
-		"ws": "8.14.2"
+		"@extws/server": "0.2.0-beta.9",
+		"@kirick/ip": "^0.1.1",
+		"@types/bun": "^1.1.13",
+		"@types/ws": "^8.5.13",
+		"neoevents": "0.1.0",
+		"ws": "^8.18.0"
 	},
 	"devDependencies": {
-		"@babel/eslint-parser": "7.21.8",
-		"eslint": "8.41.0",
-		"eslint-config-xo": "0.43.1",
-		"eslint-plugin-import": "2.27.5",
-		"eslint-plugin-node": "11.1.0",
-		"eslint-plugin-promise": "6.1.1",
-		"eslint-plugin-unicorn": "47.0.0"
+		"@extws/server-bun": "^0.2.0-beta.2",
+		"@kirick/eslint-config": "0.1.30",
+		"@types/node": "^22.9.0",
+		"eslint": "9.10.0",
+		"typescript": "5.5.4",
+		"vitest": "2.1.2"
 	},
 	"scripts": {
-		"test-node": "VERBOSE=1 NODE_TLS_REJECT_UNAUTHORIZED=0 node test/main.js",
-		"test-bun": "VERBOSE=1 NODE_TLS_REJECT_UNAUTHORIZED=0 bun run test/main.js",
-		"build": "bun run build-full && bun run build-minified",
-		"build-full": "OUT=extws-client.js bun run make/bun.build.js",
-		"build-minified": "OUT=extws-client.min.js MINIFY=1 bun run make/bun.build.js"
+		"build": "rm -r dist ; bun run build:ts && bun run build:cjs && bun run build:browser",
+		"build:browser": "rm -r dist/browser ; bun run build.ts",
+		"build:cjs": "bun build src/main.ts --outfile=dist/main.cjs --platform=node --format=cjs --packages=external",
+		"build:ts": "rm -r dist/esm ; tsc && rm dist/esm/websocket.browser.*",
+		"lint": "eslint . && tsc --skipLibCheck --noemit",
+		"publish:npm": "bun run build && bun run lint && bun run test && npm publish"
 	},
 	"repository": {
 		"type": "git",
