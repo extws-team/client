@@ -8,17 +8,18 @@
 	"type": "module",
 	"main": "dist/esm/main.js",
 	"types": "dist/esm/main.d.ts",
+	"browser": "dist/browser/main.js",
+	"unpkg": "dist/browser/main.min.js",
+	"jsdelivr": "dist/browser/main.min.js",
 	"exports": {
 		".": {
 			"import": "./dist/esm/main.js",
-			"require": "./dist/main.cjs"
+			"require": "./dist/main.cjs",
+			"browser": "./dist/browser/main.js"
 		}
 	},
 	"dependencies": {
 		"@extws/server": "0.2.0-beta.9",
-		"@kirick/ip": "^0.1.1",
-		"@types/bun": "^1.1.13",
-		"@types/ws": "^8.5.13",
 		"neoevents": "0.1.0",
 		"ws": "^8.18.0"
 	},
@@ -26,6 +27,7 @@
 		"@extws/server-bun": "^0.2.0-beta.2",
 		"@kirick/eslint-config": "0.1.30",
 		"@types/node": "^22.9.0",
+		"@types/ws": "^8.5.13",
 		"eslint": "9.10.0",
 		"typescript": "5.5.4",
 		"vitest": "2.1.2"
@@ -36,7 +38,8 @@
 		"build:cjs": "bun build src/main.ts --outfile=dist/main.cjs --platform=node --format=cjs --packages=external",
 		"build:ts": "rm -r dist/esm ; tsc && rm dist/esm/websocket.browser.*",
 		"lint": "eslint . && tsc --skipLibCheck --noemit",
-		"publish:npm": "bun run build && bun run lint && bun run test && npm publish"
+		"publish:npm": "bun run lint && bun run build && bun run test && npm publish",
+		"test": "bun test --coverage"
 	},
 	"repository": {
 		"type": "git",

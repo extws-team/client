@@ -55,13 +55,13 @@ function createWebsocket(options) {
 }
 
 // src/main.ts
-function isPlainObject(value) {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && value.constructor === Object;
-}
 var BROKEN_STATES = new Set([
   2,
   3
 ]);
+function isPlainObject(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && value.constructor === Object;
+}
 
 class ExtWSClient extends import_neoevents.NeoEventTarget {
   websocket = null;

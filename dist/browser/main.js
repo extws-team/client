@@ -15,6 +15,7 @@ var PayloadType;
 })(PayloadType || (PayloadType = {}));
 
 // node_modules/@extws/server/dist/esm/payload/json.js
+var PRINT_ERRORS = true;
 function buildPayload(payload_type, argument1, argument2) {
   let payload = String(payload_type);
   let event_type;
@@ -34,6 +35,8 @@ function buildPayload(payload_type, argument1, argument2) {
   }
   return payload;
 }
+var JSON_START = new Set(["[", "{"]);
+var textDecoder = new TextDecoder;
 function isTypedArray(value) {
   return value instanceof Int8Array || value instanceof Int16Array || value instanceof Int32Array || value instanceof Uint8Array || value instanceof Uint8ClampedArray || value instanceof Uint16Array || value instanceof Uint32Array || value instanceof Float32Array || value instanceof Float64Array || value instanceof BigInt64Array;
 }
@@ -81,9 +84,6 @@ function parsePayload(payload) {
   }
   return result;
 }
-var PRINT_ERRORS = true;
-var JSON_START = new Set(["[", "{"]);
-var textDecoder = new TextDecoder;
 // node_modules/@extws/server/dist/esm/payload/outcome-event.js
 var OutcomePayloadEventType;
 (function(OutcomePayloadEventType2) {
@@ -141,13 +141,13 @@ function createWebsocket(options) {
 }
 
 // src/main.ts
-function isPlainObject(value) {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && value.constructor === Object;
-}
 var BROKEN_STATES = new Set([
   2,
   3
 ]);
+function isPlainObject(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && value.constructor === Object;
+}
 
 class ExtWSClient extends q {
   websocket = null;
