@@ -39,12 +39,12 @@ var import_neoevents = require("neoevents");
 var import_ws = require("ws");
 function createWebsocket(options) {
   if (Object.keys(options.headers || {}).length > 0) {
-    if (globalThis.Bun) {
-      return new globalThis.WebSocket(options.url, {
-        headers: options.headers
-      });
-    }
     if (globalThis.process) {
+      if (globalThis.process.versions.bun) {
+        return new WebSocket(options.url, {
+          headers: options.headers
+        });
+      }
       return new import_ws.WebSocket(options.url, {
         headers: options.headers
       });

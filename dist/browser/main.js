@@ -92,42 +92,42 @@ var OutcomePayloadEventType;
   OutcomePayloadEventType2["BROADCAST"] = "p.broadcast";
 })(OutcomePayloadEventType || (OutcomePayloadEventType = {}));
 // node_modules/neoevents/dist/esm/main.js
-class m extends Event {
-  h;
-  constructor(g, h) {
-    super(g);
-    this.detail = h;
+class k extends Event {
+  c;
+  constructor(b, c) {
+    super(b);
+    this.detail = c;
   }
 }
 
 class q extends EventTarget {
   listeners = new Set;
-  addListener(g, h, j) {
-    this.addEventListener(g, h, j);
-    let k = () => {
-      this.removeEventListener(g, h, j), this.listeners.delete(k);
+  addListener(b, c, h) {
+    this.addEventListener(b, c, h);
+    let j = () => {
+      this.removeEventListener(b, c, h), this.listeners.delete(j);
     };
-    return this.listeners.add(k), k;
+    return this.listeners.add(j), j;
   }
-  on(g, h) {
-    return this.addListener(g, h);
+  on(b, c) {
+    return this.addListener(b, c);
   }
-  once(g, h) {
-    return this.addListener(g, h, { once: true });
+  once(b, c) {
+    return this.addListener(b, c, { once: true });
   }
-  wait(g) {
-    return new Promise((h) => {
-      this.once(g, (j) => {
-        h(j);
+  wait(b) {
+    return new Promise((c) => {
+      this.once(b, (h) => {
+        c(h);
       });
     });
   }
-  emit(g, h) {
-    this.dispatchEvent(new m(g, h));
+  emit(b, c) {
+    this.dispatchEvent(new k(b, c));
   }
   destroy() {
-    for (let g of this.listeners)
-      g();
+    for (let b of this.listeners)
+      b();
     this.listeners.clear();
   }
 }
