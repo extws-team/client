@@ -4,7 +4,10 @@ import {
 	PayloadData,
 	PayloadType,
 } from '@extws/server/dev';
-import { NeoEventTarget } from 'neoevents';
+import {
+	NeoEvent,
+	NeoEventTarget,
+} from 'neoevents';
 import {
 	createWebsocket,
 	type LocalWebSocketType,
@@ -46,7 +49,14 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 		&& value.constructor === Object;
 }
 
-export class ExtWSClient extends NeoEventTarget {
+type EventMap = {
+	beforeconnect: NeoEvent<undefined>,
+	connect: NeoEvent<undefined>,
+	disconnect: NeoEvent<undefined>,
+	[key: string]: NeoEvent,
+};
+
+export class ExtWSClient extends NeoEventTarget<EventMap> {
 	private websocket: LocalWebSocketType | null = null;
 	private websocket_state: WebsocketState | null = null;
 	url: URL;
