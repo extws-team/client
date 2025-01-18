@@ -5,7 +5,7 @@
       "name": "@extws/client",
       "dependencies": {
         "@extws/server": "0.2.0-beta.9",
-        "neoevents": "0.1.1",
+        "neoevents": "0.2.0",
         "ws": "8.18.0",
       },
       "devDependencies": {
@@ -408,7 +408,7 @@
 
     "natural-compare": ["natural-compare@1.4.0", "", {}, "sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw=="],
 
-    "neoevents": ["neoevents@0.1.1", "", {}, "sha512-xwNqMPE7cjJZ0AG0KwJO99siFLPwHJehxdOmi3psNpWjM5TFNszgmeIggZyGECR+w5MwHAX13k/iolpBjaiZgw=="],
+    "neoevents": ["neoevents@0.2.0", "", {}, "sha512-M1SStjHyA0ycBmbUg57RZtjiNo2n0JalPAx/JTJ0qtqJEKJu+M5OFk9Zof2vNrwEgMIk78uDFf/j5MGB6caXwA=="],
 
     "node-releases": ["node-releases@2.0.18", "", {}, "sha512-d9VeXT4SJ7ZeOqGX6R5EM022wpL+eWPooLI+5UpWn2jCT1aosUQEhQP214x33Wkwx3JQMvIm+tIoVOdodFS40g=="],
 

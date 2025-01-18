@@ -97,10 +97,6 @@ export class ExtWSClient extends NeoEventTarget {
 		);
 	}
 
-	// getOption<K extends keyof ClientOptions>(key: K): ClientOptions[K] {
-	// 	return this.options[key] ?? OPTIONS_DEFAULT[key];
-	// }
-
 	get is_connected(): boolean {
 		return this.websocket !== null
 			&& BROKEN_STATES.has(this.websocket.readyState) !== true
