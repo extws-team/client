@@ -12,9 +12,10 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-      - uses: kirick13/build-npm-package-action@v1.2
+      - uses: kirick13/build-npm-package-action@v1.3
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
+          node-version: 20
       - uses: kirick13/notify-action@v1
         with:
           telegram-bot-token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
