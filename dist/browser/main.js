@@ -84,6 +84,50 @@ function parsePayload(payload) {
   }
   return result;
 }
+// node_modules/neoevents/dist/esm/main.js
+class NeoEvent extends Event {
+  detail;
+  constructor(type, detail) {
+    super(type);
+    this.detail = detail;
+  }
+}
+
+class NeoEventTarget extends EventTarget {
+  listeners = new Set;
+  addListener(type, listener, options) {
+    this.addEventListener(type, listener, options);
+    const off = () => {
+      this.removeEventListener(type, listener, options);
+      this.listeners.delete(off);
+    };
+    this.listeners.add(off);
+    return off;
+  }
+  on(type, listener) {
+    return this.addListener(type, listener);
+  }
+  once(type, listener) {
+    return this.addListener(type, listener, { once: true });
+  }
+  wait(type) {
+    return new Promise((resolve) => {
+      this.once(type, (event) => {
+        resolve(event);
+      });
+    });
+  }
+  emit(type, detail) {
+    return super.dispatchEvent(new NeoEvent(type, detail));
+  }
+  destroy() {
+    for (const off of this.listeners) {
+      off();
+    }
+    this.listeners.clear();
+  }
+}
+
 // node_modules/@extws/server/dist/esm/payload/outcome-event.js
 var OutcomePayloadEventType;
 (function(OutcomePayloadEventType2) {
@@ -91,47 +135,6 @@ var OutcomePayloadEventType;
   OutcomePayloadEventType2["GROUP"] = "p.group";
   OutcomePayloadEventType2["BROADCAST"] = "p.broadcast";
 })(OutcomePayloadEventType || (OutcomePayloadEventType = {}));
-// node_modules/neoevents/dist/esm/main.js
-class k extends Event {
-  c;
-  constructor(b, c) {
-    super(b);
-    this.detail = c;
-  }
-}
-
-class q extends EventTarget {
-  listeners = new Set;
-  addListener(b, c, h) {
-    this.addEventListener(b, c, h);
-    let j = () => {
-      this.removeEventListener(b, c, h), this.listeners.delete(j);
-    };
-    return this.listeners.add(j), j;
-  }
-  on(b, c) {
-    return this.addListener(b, c);
-  }
-  once(b, c) {
-    return this.addListener(b, c, { once: true });
-  }
-  wait(b) {
-    return new Promise((c) => {
-      this.once(b, (h) => {
-        c(h);
-      });
-    });
-  }
-  emit(b, c) {
-    this.dispatchEvent(new k(b, c));
-  }
-  destroy() {
-    for (let b of this.listeners)
-      b();
-    this.listeners.clear();
-  }
-}
-
 // src/websocket.ts
 function createWebsocket(options) {
   if (Object.keys(options.headers || {}).length > 0) {
@@ -149,7 +152,7 @@ function isPlainObject(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value) && value.constructor === Object;
 }
 
-class ExtWSClient extends q {
+class ExtWSClient extends NeoEventTarget {
   websocket = null;
   websocket_state = null;
   url;

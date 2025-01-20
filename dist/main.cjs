@@ -51,7 +51,10 @@ function createWebsocket(options) {
     }
     console.warn("[@extws/client] Headers are not supported while using WebSocket in browser. They will be ignored.");
   }
-  return new globalThis.WebSocket(options.url);
+  if (globalThis.WebSocket) {
+    return new globalThis.WebSocket(options.url);
+  }
+  return new import_ws.WebSocket(options.url);
 }
 
 // src/main.ts

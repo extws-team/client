@@ -1,6 +1,6 @@
 {
 	"name": "@extws/client",
-	"version": "0.2.0-beta.4",
+	"version": "0.2.1-beta.1",
 	"description": "Client for ExtWS",
 	"publishConfig": {
 		"access": "public"
@@ -19,12 +19,12 @@
 		}
 	},
 	"dependencies": {
-		"@extws/server": "0.2.0-beta.9",
+		"@extws/server": "0.2.1-beta.1",
 		"neoevents": "0.2.0",
 		"ws": "8.18.0"
 	},
 	"devDependencies": {
-		"@extws/server-bun": "^0.2.0-beta.2",
+		"@extws/server-uws": "^0.2.1-beta.1",
 		"@kirick/eslint-config": "0.1.30",
 		"@types/node": "^22.9.0",
 		"@types/ws": "^8.5.13",
@@ -39,7 +39,7 @@
 		"build:ts": "rm -r dist/esm ; tsc && rm dist/esm/websocket.browser.*",
 		"lint": "eslint . && tsc --skipLibCheck --noemit",
 		"publish:npm": "bun run lint && bun run build && bun run test && npm publish",
-		"test": "bun test --coverage"
+		"test": "vitest run --no-file-parallelism"
 	},
 	"repository": {
 		"type": "git",

@@ -1,12 +1,18 @@
 import { PayloadData } from '@extws/server/dev';
-import { NeoEventTarget } from 'neoevents';
+import { NeoEvent, NeoEventTarget } from 'neoevents';
 interface ClientOptions {
     connect: boolean;
     reconnect: boolean;
     reconnect_interval: number;
     ping_timeout: number;
 }
-export declare class ExtWSClient extends NeoEventTarget {
+type EventMap = {
+    beforeconnect: NeoEvent<undefined>;
+    connect: NeoEvent<undefined>;
+    disconnect: NeoEvent<undefined>;
+    [key: string]: NeoEvent;
+};
+export declare class ExtWSClient extends NeoEventTarget<EventMap> {
     private websocket;
     private websocket_state;
     url: URL;

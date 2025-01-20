@@ -37,7 +37,11 @@ export function createWebsocket(options: Options) {
 		console.warn('[@extws/client] Headers are not supported while using WebSocket in browser. They will be ignored.');
 	}
 
-	return new globalThis.WebSocket(options.url);
+	if (globalThis.WebSocket) {
+		return new globalThis.WebSocket(options.url);
+	}
+
+	return new WebSocketWS(options.url);
 }
 
 export type LocalWebSocketType = ReturnType<typeof createWebsocket>;

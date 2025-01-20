@@ -1,5 +1,5 @@
 import { buildPayload, parsePayload, PayloadType, } from '@extws/server/dev';
-import { NeoEventTarget } from 'neoevents';
+import { NeoEventTarget, } from 'neoevents';
 import { createWebsocket, } from './websocket.js';
 const BROKEN_STATES = new Set([
     2, // CLOSING
@@ -49,9 +49,6 @@ export class ExtWSClient extends NeoEventTarget {
             }
         });
     }
-    // getOption<K extends keyof ClientOptions>(key: K): ClientOptions[K] {
-    // 	return this.options[key] ?? OPTIONS_DEFAULT[key];
-    // }
     get is_connected() {
         return this.websocket !== null
             && BROKEN_STATES.has(this.websocket.readyState) !== true

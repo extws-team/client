@@ -4,12 +4,12 @@
     "": {
       "name": "@extws/client",
       "dependencies": {
-        "@extws/server": "0.2.0-beta.9",
+        "@extws/server": "0.2.1-beta.1",
         "neoevents": "0.2.0",
         "ws": "8.18.0",
       },
       "devDependencies": {
-        "@extws/server-bun": "^0.2.0-beta.2",
+        "@extws/server-uws": "^0.2.1-beta.1",
         "@kirick/eslint-config": "0.1.30",
         "@types/node": "^22.9.0",
         "@types/ws": "^8.5.13",
@@ -86,9 +86,9 @@
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.1.0", "", { "dependencies": { "levn": "^0.4.1" } }, "sha512-autAXT203ixhqei9xt+qkYOvY8l6LAFIdT2UXc/RPNeUVfqRF1BV94GTJyVPFKT8nFM6MyVJhjLj9E8JWvf5zQ=="],
 
-    "@extws/server": ["@extws/server@0.2.0-beta.9", "", { "dependencies": { "nanoid": "4.0.2", "neoevents": "^0.1.0" }, "peerDependencies": { "@kirick/ip": "^0.1.1" } }, "sha512-DdltTvafrjFlKyGnzXNmHZcmWAcgIN/fHdtVBeDb3EP4akHl02nKONB6TFcmLqAAlzw/hSyJpFpam9JpWui0Ag=="],
+    "@extws/server": ["@extws/server@0.2.1-beta.1", "", { "dependencies": { "nanoid": "4.0.2", "neoevents": "^0.2.0" }, "peerDependencies": { "@kirick/ip": "^0.1.1" } }, "sha512-lXM6rJ1PXkeR3j/BaO+Yod2BkV5SufJ8HaW7bBfhJAqobnUPJawNvZX51Zq6whFN8dKAmoMjFMznP75oHAvYVw=="],
 
-    "@extws/server-bun": ["@extws/server-bun@0.2.0-beta.2", "", { "dependencies": { "@extws/server": "^0.2.0-beta.3" }, "peerDependencies": { "@kirick/ip": "^0.1.1" } }, "sha512-+CXG0oO1RhxvfcmWRjyx8ZNrz9QjLlw7URLjBp4i1Zc3r/535vVBlyN3Fmx/vf+vbvo9fud3M2rPuNg1W75tLg=="],
+    "@extws/server-uws": ["@extws/server-uws@0.2.1-beta.1", "", { "dependencies": { "@extws/server": "^0.2.1-beta.1", "uWebSockets.js": "github:uNetworking/uWebSockets.js#c10b47c350cc97c299c6b4a07a98abb628704c71" }, "peerDependencies": { "@kirick/ip": "^0.1.1" } }, "sha512-G+z/wTyS1xgbaB074HT8JQEsdMKl0OAkCV8U3CNdHbe2Mo8Rpx4/+z2//zmo7tJR+KGIxZrbAr0eg4CKd8Ux2w=="],
 
     "@humanwhocodes/module-importer": ["@humanwhocodes/module-importer@1.0.1", "", {}, "sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA=="],
 
@@ -542,6 +542,8 @@
 
     "typescript-eslint": ["typescript-eslint@8.13.0", "", { "dependencies": { "@typescript-eslint/eslint-plugin": "8.13.0", "@typescript-eslint/parser": "8.13.0", "@typescript-eslint/utils": "8.13.0" } }, "sha512-vIMpDRJrQd70au2G8w34mPps0ezFSPMEX4pXkTzUkrNbRX+36ais2ksGWN0esZL+ZMaFJEneOBHzCgSqle7DHw=="],
 
+    "uWebSockets.js": ["uWebSockets.js@github:uNetworking/uWebSockets.js#c10b47c", {}, "uNetworking-uWebSockets.js-c10b47c"],
+
     "undici-types": ["undici-types@6.19.8", "", {}, "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="],
 
     "update-browserslist-db": ["update-browserslist-db@1.1.1", "", { "dependencies": { "escalade": "^3.2.0", "picocolors": "^1.1.0" }, "peerDependencies": { "browserslist": ">= 4.21.0" }, "bin": { "update-browserslist-db": "cli.js" } }, "sha512-R8UzCaa9Az+38REPiJ1tXlImTJXlVfgHZsglwBD/k6nj76ctsH1E3q4doGrukiLQd3sGQYu56r5+lo5r94l29A=="],
@@ -575,10 +577,6 @@
     "@eslint-community/eslint-utils/eslint-visitor-keys": ["eslint-visitor-keys@3.4.3", "", {}, "sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag=="],
 
     "@eslint/eslintrc/globals": ["globals@14.0.0", "", {}, "sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ=="],
-
-    "@extws/server/neoevents": ["neoevents@0.1.0", "", {}, "sha512-63c4L5fitWhtZIxAwMDUlwq0/TMOVmiKl32E5SwfyHuZd+8kCMS/wd7zm6EnCxHjURrThQmYqgV89hc+6esT1g=="],
-
-    "@extws/server-bun/@extws/server": ["@extws/server@0.2.0-beta.7", "", { "dependencies": { "nanoid": "4.0.2" }, "peerDependencies": { "@kirick/ip": "^0.1.1" } }, "sha512-/be8gi58Euy/Ie58Bp5b36TfawqxF+mmkeVLt69P7kfC6p5Sqmnd/QnbdYw+yw2Ffe/SB643pvWomS+Lz+EHdQ=="],
 
     "@types/ws/@types/node": ["@types/node@20.12.14", "", { "dependencies": { "undici-types": "~5.26.4" } }, "sha512-scnD59RpYD91xngrQQLGkE+6UrHUPzeKZWhhjBSa3HSkwjbQc38+q3RoIVEwxQGRw3M+j5hpNAM+lgV3cVormg=="],
 
