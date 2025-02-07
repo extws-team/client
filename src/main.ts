@@ -257,7 +257,7 @@ export class ExtWSClient extends NeoEventTarget<EventMap> {
 		this.websocket?.close();
 	}
 
-	send(event_type: string, data: PayloadData) {
+	send(event_type?: string, data?: PayloadData) {
 		if (this.is_connected) {
 			this.websocket?.send(
 				buildPayload(

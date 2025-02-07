@@ -26,6 +26,6 @@ export declare class ExtWSClient extends NeoEventTarget<EventMap> {
     private sendPing;
     connect(): void;
     disconnect(): void;
-    send(event_type: string, data: PayloadData): void;
+    send(event_type?: string, data?: PayloadData): void;
 }
 export {};
