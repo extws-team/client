@@ -102,7 +102,7 @@ describe('reconnect', () => {
 
 describe('headers', () => {
 	test('custom headers are received by server', async () => {
-		const HEADER = 'x-custom-header'; // FIXME: should be `X-Custom-Header` when we support Headers class
+		const HEADER = 'X-Custom-Header';
 		const VALUE = 'test-value';
 
 		const promise = server.wait('connect');
@@ -114,7 +114,7 @@ describe('headers', () => {
 			},
 		);
 
-		client.headers[HEADER] = VALUE;
+		client.headers.set(HEADER, VALUE);
 		client.connect();
 
 		const event = await promise;

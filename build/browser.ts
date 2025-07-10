@@ -43,6 +43,3 @@ for (const MINIFY of [ true, false ]) {
 		console.error(result);
 	}
 }
-
-// eslint-disable-next-line no-restricted-exports
-export default null;

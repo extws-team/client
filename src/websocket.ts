@@ -2,7 +2,7 @@ import { WebSocket as WebSocketWS } from 'ws';
 
 export interface Options {
 	url: URL;
-	headers?: Record<string, string>;
+	headers?: Headers;
 }
 
 /**
@@ -11,15 +11,16 @@ export interface Options {
  * @returns The WebSocket connection
  */
 export function createWebsocket(options: Options) {
-	if (Object.keys(options.headers || {}).length > 0) {
+	if (options.headers) {
 		if (globalThis.process) {
+			const headers_object = Object.fromEntries(options.headers.entries());
+
 			// in Bun, WebSocket  constructor supports headers
 			if (globalThis.process.versions.bun) {
-				return new WebSocket(
+				return new globalThis.WebSocket(
 					options.url,
 					{
-						// @ts-expect-error Bun's Websocket supports headers
-						headers: options.headers,
+						headers: headers_object,
 					},
 				);
 			}
@@ -28,7 +29,7 @@ export function createWebsocket(options: Options) {
 			return new WebSocketWS(
 				options.url,
 				{
-					headers: options.headers,
+					headers: headers_object,
 				},
 			);
 		}

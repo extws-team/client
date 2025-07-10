@@ -1,99 +1,11 @@
-// node_modules/@extws/server/dist/esm/consts.js
-var IDLE_TIMEOUT = 60;
-var TIMEFRAME_PING_DISCONNECT = 5;
-var IDLE_TIMEOUT_DISCONNECT_MS = IDLE_TIMEOUT * 1000;
-var TIMEFRAME_PING_DISCONNECT_MS = TIMEFRAME_PING_DISCONNECT * 1000;
-var IDLE_TIMEOUT_PING_MS = IDLE_TIMEOUT_DISCONNECT_MS - TIMEFRAME_PING_DISCONNECT_MS;
-// node_modules/@extws/server/dist/esm/payload/types.js
-var PayloadType;
-(function(PayloadType2) {
-  PayloadType2[PayloadType2["ERROR"] = -1] = "ERROR";
-  PayloadType2[PayloadType2["INIT"] = 1] = "INIT";
-  PayloadType2[PayloadType2["PING"] = 2] = "PING";
-  PayloadType2[PayloadType2["PONG"] = 3] = "PONG";
-  PayloadType2[PayloadType2["MESSAGE"] = 4] = "MESSAGE";
-})(PayloadType || (PayloadType = {}));
-
-// node_modules/@extws/server/dist/esm/payload/json.js
-var PRINT_ERRORS = true;
-function buildPayload(payload_type, argument1, argument2) {
-  let payload = String(payload_type);
-  let event_type;
-  let data;
-  if (argument2 === undefined && typeof argument1 !== "string") {
-    data = argument1;
-    event_type = undefined;
-  } else if (typeof argument1 === "string") {
-    data = argument2;
-    event_type = argument1;
-  }
-  if (event_type) {
-    payload += event_type;
-  }
-  if (data) {
-    payload += JSON.stringify(data);
-  }
-  return payload;
-}
-var JSON_START = new Set(["[", "{"]);
-var textDecoder = new TextDecoder;
-function isTypedArray(value) {
-  return value instanceof Int8Array || value instanceof Int16Array || value instanceof Int32Array || value instanceof Uint8Array || value instanceof Uint8ClampedArray || value instanceof Uint16Array || value instanceof Uint32Array || value instanceof Float32Array || value instanceof Float64Array || value instanceof BigInt64Array;
-}
-function parsePayload(payload) {
-  if (typeof payload === "string") {
-  } else if (payload instanceof ArrayBuffer || isTypedArray(payload)) {
-    payload = textDecoder.decode(payload);
-  } else if (Array.isArray(payload)) {
-    payload = Buffer.concat(payload).toString();
-  } else {
-    throw new TypeError("Invalid payload type.");
-  }
-  const result = {
-    payload_type: (payload.codePointAt(0) ?? 48) - 48
-  };
-  let start = 1;
-  let event_type = "";
-  for (let index = start;index < payload.length && JSON_START.has(payload[index]) === false; index++) {
-    event_type += payload[index];
-    start++;
-  }
-  if (event_type.length > 31) {
-    if (PRINT_ERRORS) {
-      console.error(`Event type cannot be longer than 31 characters, received "${event_type}"`);
-    }
-    return {
-      payload_type: PayloadType.ERROR
-    };
-  }
-  if (event_type.length > 0) {
-    result.event_type = event_type;
-  }
-  if (start < payload.length) {
-    const payload_raw = payload.slice(start);
-    try {
-      result.data = JSON.parse(payload_raw);
-    } catch {
-      if (PRINT_ERRORS) {
-        console.error(`Cannot parse payload "${payload_raw}": invalid JSON`);
-      }
-      return {
-        payload_type: PayloadType.ERROR
-      };
-    }
-  }
-  return result;
-}
-// node_modules/neoevents/dist/esm/main.js
-class NeoEvent extends Event {
-  detail;
+// node_modules/neoevents/dist/main.js
+var NeoEvent = class extends Event {
   constructor(type, detail) {
     super(type);
     this.detail = detail;
   }
-}
-
-class NeoEventTarget extends EventTarget {
+};
+var NeoEventTarget = class extends EventTarget {
   listeners = new Set;
   addListener(type, listener, options) {
     this.addEventListener(type, listener, options);
@@ -121,20 +33,83 @@ class NeoEventTarget extends EventTarget {
     return super.dispatchEvent(new NeoEvent(type, detail));
   }
   destroy() {
-    for (const off of this.listeners) {
+    for (const off of this.listeners)
       off();
-    }
     this.listeners.clear();
   }
+};
+
+// node_modules/@extws/server/dist/outcome-event-C10k8UJf.js
+var IDLE_TIMEOUT = 60;
+var TIMEFRAME_PING_DISCONNECT = 5;
+var IDLE_TIMEOUT_DISCONNECT_MS = IDLE_TIMEOUT * 1000;
+var TIMEFRAME_PING_DISCONNECT_MS = TIMEFRAME_PING_DISCONNECT * 1000;
+var IDLE_TIMEOUT_PING_MS = IDLE_TIMEOUT_DISCONNECT_MS - TIMEFRAME_PING_DISCONNECT_MS;
+var PayloadType = /* @__PURE__ */ function(PayloadType$1) {
+  PayloadType$1[PayloadType$1["ERROR"] = -1] = "ERROR";
+  PayloadType$1[PayloadType$1["INIT"] = 1] = "INIT";
+  PayloadType$1[PayloadType$1["PING"] = 2] = "PING";
+  PayloadType$1[PayloadType$1["PONG"] = 3] = "PONG";
+  PayloadType$1[PayloadType$1["MESSAGE"] = 4] = "MESSAGE";
+  return PayloadType$1;
+}({});
+var PRINT_ERRORS = true;
+function buildPayload(payload_type, argument1, argument2) {
+  let payload = String(payload_type);
+  let event_type;
+  let data;
+  if (argument2 === undefined && typeof argument1 !== "string") {
+    data = argument1;
+    event_type = undefined;
+  } else if (typeof argument1 === "string") {
+    data = argument2;
+    event_type = argument1;
+  }
+  if (event_type)
+    payload += event_type;
+  if (data)
+    payload += JSON.stringify(data);
+  return payload;
+}
+var JSON_START = new Set(["[", "{"]);
+var textDecoder = new TextDecoder;
+function isTypedArray(value) {
+  return value instanceof Int8Array || value instanceof Int16Array || value instanceof Int32Array || value instanceof Uint8Array || value instanceof Uint8ClampedArray || value instanceof Uint16Array || value instanceof Uint32Array || value instanceof Float32Array || value instanceof Float64Array || value instanceof BigInt64Array;
+}
+function parsePayload(payload) {
+  if (typeof payload === "string") {} else if (payload instanceof ArrayBuffer || isTypedArray(payload))
+    payload = textDecoder.decode(payload);
+  else if (Array.isArray(payload))
+    payload = Buffer.concat(payload).toString();
+  else
+    throw new TypeError("Invalid payload type.");
+  const result = { payload_type: (payload.codePointAt(0) ?? 48) - 48 };
+  let start = 1;
+  let event_type = "";
+  for (let index = start;index < payload.length && JSON_START.has(payload[index]) === false; index++) {
+    event_type += payload[index];
+    start++;
+  }
+  if (event_type.length > 31) {
+    if (PRINT_ERRORS)
+      console.error(`Event type cannot be longer than 31 characters, received "${event_type}"`);
+    return { payload_type: PayloadType.ERROR };
+  }
+  if (event_type.length > 0)
+    result.event_type = event_type;
+  if (start < payload.length) {
+    const payload_raw = payload.slice(start);
+    try {
+      result.data = JSON.parse(payload_raw);
+    } catch {
+      if (PRINT_ERRORS)
+        console.error(`Cannot parse payload "${payload_raw}": invalid JSON`);
+      return { payload_type: PayloadType.ERROR };
+    }
+  }
+  return result;
 }
 
-// node_modules/@extws/server/dist/esm/payload/outcome-event.js
-var OutcomePayloadEventType;
-(function(OutcomePayloadEventType2) {
-  OutcomePayloadEventType2["SOCKET"] = "p.socket";
-  OutcomePayloadEventType2["GROUP"] = "p.group";
-  OutcomePayloadEventType2["BROADCAST"] = "p.broadcast";
-})(OutcomePayloadEventType || (OutcomePayloadEventType = {}));
 // src/websocket.ts
 function createWebsocket(options) {
   if (Object.keys(options.headers || {}).length > 0) {
@@ -156,7 +131,7 @@ class ExtWSClient extends NeoEventTarget {
   websocket = null;
   websocket_state = null;
   url;
-  headers = {};
+  headers = new Headers;
   options = {
     connect: true,
     reconnect: true,

@@ -1,11 +1,11 @@
 import {
 	buildPayload,
 	parsePayload,
-	PayloadData,
+	type PayloadData,
 	PayloadType,
 } from '@extws/server/dev';
 import {
-	NeoEvent,
+	type NeoEvent,
 	NeoEventTarget,
 } from 'neoevents';
 import {
@@ -60,7 +60,7 @@ export class ExtWSClient extends NeoEventTarget<EventMap> {
 	private websocket: LocalWebSocketType | null = null;
 	private websocket_state: WebsocketState | null = null;
 	url: URL;
-	headers: Record<string, string> = {};
+	headers: Headers = new Headers();
 	private options: ClientOptions = {
 		connect: true,
 		reconnect: true,
